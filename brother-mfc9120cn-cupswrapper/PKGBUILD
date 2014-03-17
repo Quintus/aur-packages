@@ -1,0 +1,28 @@
+# Maintainer: Quintus Quintilianus Curiosus <quintus@quintilianus.eu>
+_mainver=1.1.2
+_upstreamrel=2
+pkgname=brother-mfc9120cn-cupswrapper
+pkgver=${_mainver}_${_upstreamrel}
+pkgrel=1
+epoch=
+pkgdesc="LPR-to-CUPS wrapper for Brother MFC-9120CN multifunction network printer"
+arch=("i386" "x86_64")
+url="http://welcome.solutions.brother.com/bsc/public_s/id/linux/en/download_prn.html#MFC-9120CN"
+license=('GPL')
+depends=("brother-mfc9120cn-lpr" "cups" "ghostscript")
+makedepends=("binutils")
+install=brother-mfc9120cn-cupswrapper.install
+source=("http://www.brother.com/pub/bsc/linux/dlf/mfc9120cncupswrapper-${_mainver}-${_upstreamrel}.i386.deb")
+noextract=("mfc9120cncupswrapper-${_mainver}-${upstreamrel}.i386.deb")
+md5sums=("139032909f7d236094ef2cb9d7735492")
+
+prepare() {
+    ar x "mfc9120cncupswrapper-${_mainver}-${_upstreamrel}.i386.deb"
+    mkdir data
+    tar -xzf data.tar.gz -C data
+}
+
+package() {
+	cd "$srcdir/data"
+  cp -rv . "$pkgdir"
+}

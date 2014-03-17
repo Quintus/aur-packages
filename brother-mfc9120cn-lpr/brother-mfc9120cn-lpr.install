@@ -1,0 +1,14 @@
+post_install() {
+    if ! grep -q lp /etc/group; then
+        groupadd -r lp
+    fi
+    if ! grep -q lp /etc/passwd; then
+        useradd -r -d / -g lp lp
+    fi
+
+    /opt/brother/Printers/mfc9120cn/inf/setupPrintcapij mfc9120cn -i
+}
+
+pre_remove() {
+    /opt/brother/Printers/mfc9120cn/inf/setupPrintcapij mfc9120cn -e
+}

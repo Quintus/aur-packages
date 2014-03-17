@@ -1,0 +1,34 @@
+# Maintainer: Quintus Quintilianus Curiosus <quintus@quintilianus.eu>
+_mainver=1.1.2
+_upstreamrel=1
+pkgname=brother-mfc9120cn-lpr
+pkgver=${_mainver}_${_upstreamrel}
+pkgrel=1
+epoch=
+pkgdesc="LPR-to-CUPS wrapper for Brother MFC-9120CN multifunction network printer"
+arch=("i386" "x86_64")
+url="http://welcome.solutions.brother.com/bsc/public_s/id/linux/en/download_prn.html#MFC-9120CN"
+license=('custom:Brother')
+depends=("tcsh")
+makedepends=("binutils")
+optdepends=("brother-mfc9120cn-cupswrapper: CUPS printing wrapper")
+install=brother-mfc9120cn-lpr.install
+source=("http://www.brother.com/pub/bsc/linux/dlf/mfc9120cnlpr-${_mainver}-${_upstreamrel}.i386.deb"
+        "LICENSE")
+noextract=("mfc9120cnlpr-${_mainver}-${_upstreamrel}.i386.deb")
+md5sums=("b2e55648085030c21d7ebc2d1cb5d5f9"
+         "9b1cfa0063e6fdeac9e4217bd04208ab")
+options=(emptydirs)
+
+prepare() {
+    ar x "mfc9120cnlpr-${_mainver}-${_upstreamrel}.i386.deb"
+    mkdir data
+    tar -xzf data.tar.gz -C data
+}
+
+package() {
+    cd "$srcdir/data"
+    cp -rv . "$pkgdir"
+    install -D -m644 "$srcdir/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    mkdir -p "$pkgdir/var/spool/lpd"
+}

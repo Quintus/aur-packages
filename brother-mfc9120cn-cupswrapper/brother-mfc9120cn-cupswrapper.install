@@ -1,0 +1,7 @@
+post_install() {
+    /opt/brother/Printers/"mfc9120cn"/cupswrapper/cupswrappermfc9120cn
+}
+
+pre_remove() {
+	  /opt/brother/Printers/"mfc9120cn"/cupswrapper/cupswrappermfc9120cn -e
+}
