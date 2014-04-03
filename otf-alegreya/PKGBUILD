@@ -1,0 +1,32 @@
+# Maintainer: Quintus <quintus@quintilianus.eu>
+pkgname=otf-alegreya
+pkgver=20140403
+pkgrel=1
+pkgdesc="The Alegreya fonts are designed by Juan Pablo del Peral for Huerta Tipográfica."
+arch=("any")
+url="http://www.ctan.org/tex-archive/fonts/alegreya"
+license=('custom:OFL')
+depends=('fontconfig' 'xorg-fonts-encodings' 'xorg-font-utils')
+makedepends=('unzip')
+install=$pkgname.install
+source=(http://mirrors.ctan.org/fonts/alegreya.zip)
+noextract=("alegreya.zip")
+md5sums=("SKIP")
+
+pkgver() {
+    date '+%Y%m%d'
+}
+
+prepare() {
+    cd "$srcdir"
+    unzip alegreya.zip
+}
+
+package() {
+    cd "$srcdir/alegreya"
+    mkdir -p "$pkgdir/usr/share/fonts/OTF"
+    mkdir -p "$pkgdir/usr/share/licenses/$pkgname"
+
+    install -Dm644 opentype/*.otf "$pkgdir/usr/share/fonts/OTF"
+    install -Dm644 doc/OFL.txt "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
